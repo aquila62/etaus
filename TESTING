@@ -1,0 +1,158 @@
+The visual tests included here do not occur in dieharder or
+TestU01.  Dieharder and TestU01 have statistical versions of
+these tests.  To test etaus with dieharder or TestU01, feed
+the output from etausgen into those test suites.
+
+------------------------------------------------------
+
+Test etaus by running tstetaus.  There are no parameters.
+
+./tstetaus
+
+The output from tstetaus is a block of 1000 random bits.
+
+------------------------------------------------------
+
+Uniform distribution chi square test.
+There are no parameters.
+
+./etauschi
+
+The output from etauschi is a chi square of 65536
+4-bit samples.  Number of degrees of freedom is 15.
+The chi square is computed for the upper 4 bits in
+an unsigned integer from etauspwr().
+
+------------------------------------------------------
+
+Uniform distribution chi square test.
+The unsigned integer from etaus() is tested in
+4-bit groups.
+     Bits
+    29-32
+    25-28
+    21-24
+    17-20
+    13-16
+     9-12
+     5-8
+     1-4
+
+There are no parameters.
+Usage:
+
+./uintchi | less
+
+The output from uintchi for each group of 4 bits
+is a chi square of 65536 4-bit samples.  Number of
+degrees of freedom is 15.
+
+------------------------------------------------------
+Binomial distribution chi square test.
+There are no parameters.
+
+./binom
+
+The output from binom is a chi square of 65536
+16-bit samples.  Number of degrees of freedom is 16.
+
+------------------------------------------------------
+
+Poisson distribution chi square test.
+There are two parameters, lambda and size of population.
+
+./poischi lambda size
+
+Example:
+
+./poischi 6 100000
+
+The output from poischi is the chi square with
+number of degrees of freedom, based on lambda.
+
+------------------------------------------------------
+
+The Anderson-Darling test for a normal distribution is
+not included in this repository, because it requires a
+statistical package, like R and the nortest library.
+
+------------------------------------------------------
+
+Test etausunif() and etausint() by running tstpat.
+This test requires the new curses package.
+
+sudo apt-get install libncurses-dev
+
+./tstnc
+
+The output from tstnc is a random pattern of ASCII characters
+on a curses screen.  To quit press 'q'.
+
+------------------------------------------------------
+
+Test etauspwr() by running tstdots.
+This test requires X Windows.
+
+sudo apt-get install libx11-dev
+
+./tstdots
+
+The output from tstdots is a random bitmap pattern of pixels 
+on an X Windows screen.  To quit press 'q'.
+
+------------------------------------------------------
+
+Random Walk Test:  ranwlk
+This test requires X Windows.  See sudo apt-get above.
+
+./tstwlk.sh
+
+The output from tstwlksh is a random walk relative to a midpoint
+line on an X Windows screen.  To quit press any key.
+
+------------------------------------------------------
+
+Random Powerball Simulation:  pwrball
+pwrball is a random lottery game based on real odds
+and real pay-outs.
+This test requires new curses.  See apt-get above.
+
+./pwrball
+
+The output from pwrball shows money spent and money
+received for each prize level.  To quit press 'q'.
+The grand totals are in millions of dollars.
+The lesser prizes are in thousands of dollars.
+
+------------------------------------------------------
+
+Dieharder Test:  tstdie.sh
+Dieharder has to be installed first.
+
+sudo apt-get install libdieharder-dev
+sudo apt-get install dieharder
+
+tstdie.sh illustrates how a raw stream of random data is piped
+into a down stream test suite.
+
+./tstdie.sh
+
+The output from tstdie.sh is a statistical report.
+This is a long running test.  To interrupt press CTRL-C.
+The first test takes half minute to print a report.
+
+------------------------------------------------------
+
+TestU01 is more difficult to run with the etaus generator.
+You have to download the TestU01 package and then compile it.
+Then you have to write and compile a test program in the
+examples directory of TestU01.  The short guide for TestU01
+gives you examples of how to set up a test.  In particular,
+you need to use ufile to read input from etausgen in your test.
+After you get over the learning curve, you will be rewarded
+with some strong and varied tests.
+
+------------------------------------------------------
+
+The website for etaus is at https://aquila62.github.io.
+

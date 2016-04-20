@@ -1,0 +1,100 @@
+etaus is a random number generator (RNG) that produces unsigned
+integers in a uniform distribution.  etaus is based on 1024 32-bit
+states.  etaus uses these 1024 states to perform a Bays-Durham shuffle.
+The 'e' in "etaus" means "extended taus", because the period length
+of etaus is much longer than the original taus algorithm, created
+by George Marsaglia.
+
+The period length of etaus is so long that it can never be tested.
+Because of the Bays-Durham shuffle, the period length is theoretically
+5.42e+2639, or the factorial of 1024.
+
+Test results.
+
+The etaus random number generator has tested successfully in the
+following tests.
+
+    dieharder -a
+    TestU01 Crush
+    National Institute of Standards and Technology STS test suite.
+
+The dieharder test yielded three weak p-values that were above
+0.99.  That meant that the three weak test results were too 
+good to be random.  There were no fails in the dieharder test.
+Upon retesting, the three weak p-values did not appear in
+the same three tests, so weak results are subject to chance
+with the etaus generator.
+
+The TestU01 Crush test yielded no fails.
+
+Most of the STS tests are easy to pass, and so passing them does
+not validate a generator to any great degree.  Nevertheless,
+etaus passed the STS suite of tests, especially the harder tests.
+TestU01 incorporates the STS suite of tests into its own Crush
+suite.  Dieharder incorporates George Marsaglia's original diehard
+suite of tests.
+
+Benchmarking.
+
+etaus performs about one third faster than the taus2 generator
+in the GNU Scientific Library (GSL).
+
+When testing etaus as input to dieharder -g 200, be cautioned
+that the raw input feature of dieharder slows down the test.
+It is better to integrate etaus into dieharder as an internal
+random number generator in the 600 series of generators.
+
+The same is true with TestU01.  It is better to integrate etaus
+as an internal random number generator in order to speed up the
+test.
+
+When fed as raw input to dieharder through a pipe, the etaus
+generator consumes about 20% of the CPU, while dieharder consumes
+about 70%.
+
+Initialization.
+
+There is no restriction in initializing the 1024 states in etaus.
+However, it is recommended not to initialize the states to zero.
+etaus is initialized to 4096 bytes of non zero random state values.
+If you wish, you may override the initial values of the state array,
+so that you may conduct regression tests. You will also have to
+initialize the GSL taus random number generator to an arbitrary value.
+All of the etaus states are available to the programmer through a
+structure.  See etaus.h for the structure.
+
+Distributed processing.
+
+etaus is conducive to running on a Beowulf style of supercomputer.
+Each of its 1024 states may be manipulated independently in separate
+nodes of the supercomputer.  The one bottle neck occurs during the
+Bays-Durham shuffle, when the state array is being changed.
+I see no reason why etaus could not keep pace with the fastest
+supercomputer in a scientific experiment.
+
+Supporting subroutines.
+
+The etaus generator has three subroutines that depend on it.
+The calling program is responsible for passing valid parameters.
+Each subroutine may be called billions of times in a scientific
+experiment, and validation in the subroutine would be redundant
+in most cases.
+
+etausunif.c produces a uniform random number from 0 - 1.  Its only
+parameter is the etaus structure.
+
+etausint.c produces a uniform random integer from 0 up to a limit.
+It has two parameters, the etaus structure, and the limit.  The
+limit may be negative or positive.
+
+etauspwr.c produces an unsigned integer of 1 to 32 bits.  It has
+two parameters, the etaus structure, and the number of bits.
+
+etausgen.c produces a raw stream of 32 bit unsigned integers to stdout.
+
+etausgen is used to feed random data into down stream programs, such
+as the dieharder or STS suite of tests.
+
+See TESTING for more information.
+
+The website for etaus is at https://aquila62.github.io.
