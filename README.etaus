@@ -75,10 +75,10 @@ supercomputer in a scientific experiment.
 
 Supporting subroutines.
 
-The etaus generator has three subroutines that depend on it.
+The etaus generator has four subroutines that depend on it.
 The calling program is responsible for passing valid parameters.
 Each subroutine may be called billions of times in a scientific
-experiment, and validation in the subroutine would be redundant
+experiment.  Validation in the subroutine would be redundant
 in most cases.
 
 etausunif.c produces a uniform random number from 0 - 1.  Its only
@@ -91,10 +91,13 @@ limit may be negative or positive.
 etauspwr.c produces an unsigned integer of 1 to 32 bits.  It has
 two parameters, the etaus structure, and the number of bits.
 
-etausgen.c produces a raw stream of 32 bit unsigned integers to stdout.
+etausbit.c produces a boolean integer (0 or 1).    Its only
+parameter is the etaus structure.
 
-etausgen is used to feed random data into down stream programs, such
-as the dieharder or STS suite of tests.
+etausgen.c produces an ASCII stream of ones and zeros to stdout.
+
+etausraw.c is used to feed random binary data into down stream
+programs, such as dieharder or TestU01 test programs..
 
 See TESTING for more information.
 

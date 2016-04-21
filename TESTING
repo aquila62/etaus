@@ -1,7 +1,7 @@
-The visual tests included here do not occur in dieharder or
-TestU01.  Dieharder and TestU01 have statistical versions of
-these tests.  To test etaus with dieharder or TestU01, feed
-the output from etausgen into those test suites.
+The visual and amusement tests, included here, do not occur
+in dieharder or TestU01.  Dieharder and TestU01 are statistical
+test suites.  To test etaus with dieharder or TestU01, feed
+the output from etausraw into those test suites.
 
 ------------------------------------------------------
 
@@ -9,7 +9,8 @@ Test etaus by running tstetaus.  There are no parameters.
 
 ./tstetaus
 
-The output from tstetaus is a block of 1000 random bits.
+The output from tstetaus is a block of 1000 random zeros
+and ones.
 
 ------------------------------------------------------
 
@@ -19,13 +20,13 @@ There are no parameters.
 ./etauschi
 
 The output from etauschi is a chi square of 65536
-4-bit samples.  Number of degrees of freedom is 15.
-The chi square is computed for the upper 4 bits in
-an unsigned integer from etauspwr().
+4-bit samples.  The number of degrees of freedom is 15.
+The chi square is computed for 4 bits as output from
+etauspwr().
 
 ------------------------------------------------------
 
-Uniform distribution chi square test.
+Second uniform distribution chi square test.
 The unsigned integer from etaus() is tested in
 4-bit groups.
      Bits
@@ -55,6 +56,8 @@ There are no parameters.
 
 The output from binom is a chi square of 65536
 16-bit samples.  Number of degrees of freedom is 16.
+This test uses Pascal's Triangle for calculating
+expected probabilities.
 
 ------------------------------------------------------
 
@@ -67,18 +70,31 @@ Example:
 
 ./poischi 6 100000
 
-The output from poischi is the chi square with
-number of degrees of freedom, based on lambda.
+The output from poischi is the chi square, with
+number of degrees of freedom based on lambda.
 
 ------------------------------------------------------
 
 The Anderson-Darling test for a normal distribution is
 not included in this repository, because it requires a
 statistical package, like R and the nortest library.
+In my own testing, etausnorm has passed the Anderson-
+Darling test in the R package.  Input to the test was
+a Gaussian distribution created by the Box-Muller transform.
+etausnorm.c produces numbers in the normal distribution.
+
+Usage:
+./etausnorm mean stdev size
+
+Example:
+./etausnorm 15.0 2.0 5000
+
+The R package requires an upper limit of 5000 numbers
+as input a test.
 
 ------------------------------------------------------
 
-Test etausunif() and etausint() by running tstpat.
+Test etausint() by running tstpat.
 This test requires the new curses package.
 
 sudo apt-get install libncurses-dev
@@ -98,7 +114,7 @@ sudo apt-get install libx11-dev
 ./tstdots
 
 The output from tstdots is a random bitmap pattern of pixels 
-on an X Windows screen.  To quit press 'q'.
+on an X Windows screen, 512x512.  To quit press 'q'.
 
 ------------------------------------------------------
 
@@ -114,7 +130,7 @@ line on an X Windows screen.  To quit press any key.
 
 Random Powerball Simulation:  pwrball
 pwrball is a random lottery game based on real odds
-and real pay-outs.
+and real pay-outs.  The jackpot is $1 Billion.
 This test requires new curses.  See apt-get above.
 
 ./pwrball
@@ -148,7 +164,7 @@ You have to download the TestU01 package and then compile it.
 Then you have to write and compile a test program in the
 examples directory of TestU01.  The short guide for TestU01
 gives you examples of how to set up a test.  In particular,
-you need to use ufile to read input from etausgen in your test.
+you need to use ufile to read input from etausraw in your test.
 After you get over the learning curve, you will be rewarded
 with some strong and varied tests.
 
