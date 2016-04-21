@@ -9,6 +9,7 @@ make -f etausraw.mak clean
 make -f etaustim.mak clean
 make -f etauspat.mak clean
 make -f etausdots.mak clean
+make -f etausnorm.mak clean
 make -f tstetaus.mak clean
 make -f ranwlk.mak clean
 make -f pwrball.mak clean
