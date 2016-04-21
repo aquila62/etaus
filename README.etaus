@@ -3,7 +3,8 @@ integers in a uniform distribution.  etaus is based on 1024 32-bit
 states.  etaus uses these 1024 states to perform a Bays-Durham shuffle.
 The 'e' in "etaus" means "extended taus", because the period length
 of etaus is much longer than the original taus algorithm, created
-by George Marsaglia.
+by Professor Pierre L'Ecuyer at the University of Montreal, Montreal,
+Quebec, Canada.
 
 The period length of etaus is so long that it can never be tested.
 Because of the Bays-Durham shuffle, the period length is theoretically
