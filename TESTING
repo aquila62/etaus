@@ -49,6 +49,35 @@ is a chi square of 65536 4-bit samples.  Number of
 degrees of freedom is 15.
 
 ------------------------------------------------------
+
+Monte Carlo calculation of Pi/4.
+There are no parameters.
+
+./mcpi
+
+The output from mcpi is an approximation of Pi/4
+based on a Monte Carlo simulation of a quarter circle
+in a unit square.  The formula is x^2 + y^2 < 1.
+etaus is compared with GSL Mersenne Twister, mt19937,
+and GSL ranlxd2.  ranlxd2 runs at 1/10 the speed of
+etaus.  n = 100 million.
+
+------------------------------------------------------
+
+Monte Carlo calculation of Pi/6.
+There are no parameters.
+
+./mcsph
+
+The output from mcsph is an approximation of Pi/6
+based on a Monte Carlo simulation of a 1/8 sphere.
+in a unit cube.  The formula is x^2 + y^2 + z^2 < 1.
+etaus is compared with GSL Mersenne Twister, mt19937,
+and GSL ranlxd2.  ranlxd2 runs at 1/10 the speed of
+etaus.  n = 100 million.
+
+------------------------------------------------------
+
 Binomial distribution chi square test.
 There are no parameters.
 
