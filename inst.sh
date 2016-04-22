@@ -1,5 +1,6 @@
 #!/bin/bash
 make -f mcpi.mak
+make -f mcsph.mak
 make -f binom.mak
 make -f poischi.mak
 make -f uintchi.mak
