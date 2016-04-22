@@ -36,8 +36,6 @@ CFLAGS=-c -Wall -O2
 
 LDFLAGS=-lncurses -lgsl -lgslcblas -lm
 
-all:			$(OBJ) etauspat
-
 etauspat:		$(OBJ)
 	$(CC) -Wall -O2 $(OBJ) -o etauspat $(LDFLAGS)
 
