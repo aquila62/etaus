@@ -1,6 +1,10 @@
 #!/bin/bash
 make -f mcpi.mak clean
 make -f mcsph.mak clean
+make -f mcparab.mak clean
+make -f mcbell.mak clean
+make -f mcsin.mak clean
+make -f mccos.mak clean
 make -f binom.mak clean
 make -f poischi.mak clean
 make -f uintchi.mak clean
