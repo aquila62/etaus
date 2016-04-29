@@ -22,9 +22,9 @@
 /* mcpi estimates the value of Pi/4 through a Monte     */
 /* Carlo simulation.                                    */
 /* Two uniform random numbers are generated 0-1         */
-/* 100 million times                                    */
+/* 1 million times                                      */
 /* If x^2 + y^2 < 1 then tally a counter                */
-/* The ratio of the counter total / 100 million         */
+/* The ratio of the counter total / 1 million           */
 /* is approximately Pi/4 to 3 or 4 decimal places       */
 /* or approximately 0.785...                            */
 /********************************************************/
@@ -58,7 +58,7 @@ int main(void)
    gsl_rng *r;                /* GSL RNG structure            */
    etfmt *et;                 /* etaus structure              */
    et = (etfmt *) etausinit();     /* initialize the etaus structure */
-   bot = 100000000.0;         /* set to 100 million           */
+   bot = 1000000.0;           /* set to 1 million             */
    /************************************************************/
    tot = 0.0;                 /* initialize total points in a circle */
    i = (int) bot;             /* set loop counter */
@@ -77,7 +77,7 @@ int main(void)
    ratio = tot / bot;         /* calculate est. pi/4   */
    etausfin = times(&t);      /* finish time for etaus */
    printf("Monte Carlo Calculation of Pi/4\n");
-   printf("      n = 100 million\n");
+   printf("      n = 1 million\n");
    printf("      etaus Pi/4 %18.15f\n", ratio);
    /************************************************************/
    /* allocate the mt19937 random number generator */
@@ -95,7 +95,7 @@ int main(void)
    i = (int) bot;             /* set loop counter */
    /* get clock ticks since boot                              */
    mtstart = times(&t);       /* start time for GSL mt19937   */
-   while (i--)                /* loop 100 million times       */
+   while (i--)                /* loop 1 million times         */
       {
       double x;               /* horizontal value             */
       double y;               /* vertical   value             */
@@ -109,11 +109,6 @@ int main(void)
    ratio = tot / bot;         /* calculate est. pi/4           */
    mtfin = times(&t);         /* finish time for GSL mt19937   */
    printf("GSL mt19937 Pi/4 %18.15f\n", ratio);
-   printf("     Actual Pi/4 %18.15f\n", M_PI * 0.25);
-   etauselap = etausfin - etausstart;
-   mtelap    = mtfin    - mtstart;
-   printf("      etaus ticks %6d\n", etauselap);
-   printf("GSL mt19937 ticks %6d\n", mtelap);
    /************************************************************/
    /* allocate the ranlxd2 random number generator */
    r = (gsl_rng *) gsl_rng_alloc(gsl_rng_ranlxd2);
@@ -130,7 +125,7 @@ int main(void)
    i = (int) bot;             /* set loop counter */
    /* get clock ticks since boot                              */
    ranlxstart = times(&t);    /* start time for GSL ranlxd2   */
-   while (i--)                /* loop 100 million times       */
+   while (i--)                /* loop 1 million times         */
       {
       double x;               /* horizontal value             */
       double y;               /* vertical   value             */
@@ -146,8 +141,10 @@ int main(void)
    printf("GSL ranlxd2 Pi/4 %18.15f\n", ratio);
    printf("     Actual Pi/4 %18.15f\n", M_PI * 0.25);
    etauselap = etausfin - etausstart;
+   mtelap    = mtfin    - mtstart;
    ranlxelap = ranlxfin - ranlxstart;
    printf("      etaus ticks %6d\n", etauselap);
+   printf("GSL mt19937 ticks %6d\n", mtelap);
    printf("GSL ranlxd2 ticks %6d\n", ranlxelap);
    return(0);
    } /* main */

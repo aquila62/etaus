@@ -171,14 +171,14 @@ int main(int argc, char **argv)
       exit(1);
       } /* mean too large */
    stdev = atof(*(argv+2));            /* standard deviation */
-   if (stdev < 0)
+   if (stdev < 1.0)
       {
       fprintf(stderr,"Stdev parameter %s "
          "is too small\n", *(argv+2));
       putstx(*argv);
       exit(1);
       } /* stdev too small */
-   if (stdev > 1000)
+   if (stdev > 1000.0)
       {
       fprintf(stderr,"Stdev parameter %s "
          "is too large\n", *(argv+2));
