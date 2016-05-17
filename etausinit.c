@@ -24,13 +24,11 @@
 /* the state array                                         */
 /* the two previous outputs                                */
 /* the current output                                      */
-/* the seed for the GSL taus2 subroutine                   */
 /* the three states for the taus algorithm                 */
 /*                                                         */
-/* The GSL version of taus2 is used to initialize etaus    */
-/* with random values based on date and time               */
-/* The period length of etaus is estimated to be many      */
-/* magnitudes longer than regular taus.                    */
+/* The period length of etaus is estimated to be           */
+/* 5.41e+2639.                                             */
+/* The period length of GSL taus2 is 3.09e+26.             */
 /* The speed of etaus is 1/3 faster than the GSL version   */
 /* of taus2.                                               */
 
@@ -39,8 +37,6 @@
 #include <unistd.h>
 #include <time.h>
 #include <sys/times.h>
-#include <math.h>
-#include <gsl/gsl_rng.h>
 #include "etaus.h"
 
 /* size of the state array is 2^10 */
@@ -48,12 +44,12 @@
 
 etfmt *etausinit(void)
    {
+   int i;                      /* loop counter */
    unsigned int dttk;          /* combined date, time, and #ticks */
    unsigned int *stp,*stq;     /* pointer into state array */
    time_t now;                 /* current date and time */
    clock_t clk;                /* current number of ticks */
    struct tms t;               /* structure used by times() */
-   gsl_rng *r;                 /* GSL RNG structure */
    etfmt *et;                  /* etaus structure */
 
    /***************************************************/
@@ -83,17 +79,22 @@ etfmt *etausinit(void)
    /***************************************************/
    /* Randomize the seeds and states                  */
    /***************************************************/
-   /* declare the GSL random number generator as taus2     */
-   r = (gsl_rng *) gsl_rng_alloc(gsl_rng_taus2);
    /* get clock ticks since boot                           */
    clk = times(&t);
    /* get date & time                                      */
    time(&now);
    /* combine date, time, and ticks into a single UINT     */
    dttk = (unsigned int) (now ^ clk);
-   /* initialize the GSL taus2 random number generator      */
-   /* to date,time,#ticks                                  */
-   gsl_rng_set(r, dttk);
+   /* initialize the three taus states to date,time,ticks  */
+   et->s1 = now;      /* initialize s1 to date, time       */
+   et->s2 = clk;      /* initialize s2 to ticks            */
+   et->s3 = dttk;     /* initialize s3 to combined dttk    */
+
+   /***************************************************/
+   /* Warm up the taus states.                        */
+   /***************************************************/
+   i = 128;
+   while (i--) et->out = TAUS;
 
    /***************************************************/
    /* initialize the state array to random values     */
@@ -102,20 +103,16 @@ etfmt *etausinit(void)
    stq = (unsigned int *) et->state + STATES;
    while (stp < stq)
       {
-      *stp++ = gsl_rng_get(r);     /* set to random UINT */
+      *stp++ = TAUS;            /* set to random UINT */
       } /* for each member in et->state array */
 
    /***************************************************/
    /* initialize out, prev, and prev prev             */
-   /* and taus s1,s2,s3                               */
    /* to random values                                */
    /***************************************************/
-   et->pprev = gsl_rng_get(r);   /* set to random UINT */
-   et->prev  = gsl_rng_get(r);   /* set to random UINT */
-   et->out   = gsl_rng_get(r);   /* set to random UINT */
-   et->s1    = gsl_rng_get(r);   /* set to random UINT */
-   et->s2    = gsl_rng_get(r);   /* set to random UINT */
-   et->s3    = gsl_rng_get(r);   /* set to random UINT */
+   et->pprev = TAUS;            /* set to random UINT */
+   et->prev  = TAUS;            /* set to random UINT */
+   et->out   = TAUS;            /* set to random UINT */
 
    /***************************************************/
    /* after this subroutine you may initialize the    */
