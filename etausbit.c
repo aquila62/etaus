@@ -31,24 +31,19 @@ int etausbit(etfmt *et)
    int bit;
    unsigned int *p;           /* state pointer */
    unsigned int tmp;          /* used for bays-durham shuffle */
-   /**********************************************************/
-   /* back up the previous two states                        */
-   /**********************************************************/
-   et->ofst  = et->pprev >> 22;   /* offset into state array */
-   et->pprev = et->prev;   /* prev ==> prev prev  */
-   et->prev  = et->out;    /* current ==> prev  */
-   /**********************************************************/
-   /* Calculate the taus algorithm inline to save a call     */
-   /* to etaus()                                             */
-   /**********************************************************/
-   et->s1 = (((et->s1&0xfffffffe)<<12)
-      ^(((et->s1<<13)^et->s1)>>19));
-   et->s2 = (((et->s2&0xfffffff8)<< 4)
-      ^(((et->s2<< 2)^et->s2)>>25));
-   et->s3 = (((et->s3&0xfffffff0)<<17)
-      ^(((et->s3<< 3)^et->s3)>>11));
+   /***********************************************************/
+   /* back up the previous two states                         */
+   /***********************************************************/
+   et->ofst  = et->pprev >> 22;   /* offset into state array  */
+   et->pprev = et->prev;   /* prev ==> prev prev              */
+   et->prev  = et->out;    /* current ==> prev                */
+   /***********************************************************/
+   /* Calculate the taus algorithm inline to save a call      */
+   /* to etaus()                                              */
+   /***********************************************************/
+   /* The TAUS macro is in etaus.h                            */
    /* XOR the previous two results with the current output    */
-   et->out = et->pprev ^ et->prev ^ et->s1 ^ et->s2 ^ et->s3;
+   et->out = (TAUS ^ et->pprev ^ et->prev);
    /***********************************************************/
    /* Bays-Durham shuffle of state array                      */
    /* 1024! = 5.41e+2639 base 10 rounded down                 */
