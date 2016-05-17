@@ -22,7 +22,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <math.h>
-#include <gsl/gsl_rng.h>
 #include <gsl/gsl_cdf.h>
 #include "etaus.h"
 
