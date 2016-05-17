@@ -37,8 +37,10 @@ suite of tests.
 
 Benchmarking.
 
-etaus performs about one third faster than the taus2 generator
-in the GNU Scientific Library (GSL).
+The benchmarking program counts the number of ticks taken to call
+the random number generator one hundred million times.  etaus
+performs about one third faster than the taus2 and Mersenne Twister
+generators in the GNU Scientific Library (GSL).
 
 When testing etaus as input to dieharder -g 200, be cautioned
 that the raw input feature of dieharder slows down the test.
@@ -55,14 +57,17 @@ about 70%.
 
 Initialization.
 
-There is no restriction in initializing the 1024 states in etaus.
-However, it is recommended not to initialize the states to zero.
-etaus is initialized to 4096 bytes of non zero random state values.
+Initialize the 1024 states in etaus to non-zero random or arbitrary
+values.  That amounts to initializing etaus to more than 4000 bytes
+of data.
+
 If you wish, you may override the initial values of the state array,
 so that you may conduct regression tests. You will also have to
-initialize the GSL taus random number generator to an arbitrary value.
+initialize the three taus states and the two previous outputs to
+arbitrary values.
+
 All of the etaus states are available to the programmer through a
-structure.  See etaus.h for the structure.
+public structure.  See etaus.h for the structure.
 
 Distributed processing.
 
@@ -94,11 +99,14 @@ two parameters, the etaus structure, and the number of bits.
 etausbit.c produces a boolean integer (0 or 1).    Its only
 parameter is the etaus structure.
 
+Utilities.
+
 etausgen.c produces an ASCII stream of ones and zeros to stdout.
 
-etausraw.c is used to feed random binary data into down stream
-programs, such as dieharder or TestU01 test programs..
+etausraw.c feeds random binary data into down stream programs,
+such as dieharder or TestU01 test programs..
 
-See TESTING for more information.
+Read INSTALL for installing etaus.
+Read TESTING for running tests in this repository.
 
 The website for etaus is at https://aquila62.github.io.
