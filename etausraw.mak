@@ -18,12 +18,6 @@
    #  59 Temple Place - Suite 330
    #  Boston, MA 02111-1307, USA.
 
-#--------------------------------------------------------
-#  The LFSR in this generator comes from the following
-#  website http://www.xilinx.com/support/documentation/
-#  application_notes/xapp052.pdf
-#--------------------------------------------------------
-
 # this program feeds ranwlk.c
 # use tstwlk.sh to test this program with ranwlk.c
 
