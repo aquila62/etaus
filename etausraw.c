@@ -24,8 +24,6 @@
 #include <malloc.h>
 #include <time.h>
 #include <sys/times.h>
-#include <math.h>
-#include <gsl/gsl_rng.h>
 #include "etaus.h"
 
 /* write one million bytes to stdout */
