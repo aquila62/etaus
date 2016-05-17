@@ -24,7 +24,7 @@ CC=gcc
 
 CFLAGS=-c -Wall -O2
 
-LDFLAGS=-lgsl -lgslcblas -lm
+LDFLAGS=-lm
 
 etausnorm:		$(OBJ)
 	$(CC) -Wall -O2 $(OBJ) -o etausnorm $(LDFLAGS)
