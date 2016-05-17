@@ -30,7 +30,7 @@ CC=gcc
 
 CFLAGS=-c -Wall -O2
 
-LDFLAGS=-lgsl -lgslcblas -lm
+LDFLAGS=
 
 etausgen:			$(OBJ)
 		$(CC) -Wall -O2 $(OBJ) -o etausgen $(LDFLAGS)
