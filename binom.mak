@@ -24,7 +24,7 @@ CC=gcc
 
 CFLAGS=-c -Wall -O2
 
-LDFLAGS=-lrnd -lgsl -lgslcblas -lm
+LDFLAGS=-lgsl -lgslcblas -lm
 
 binom:			$(OBJ)
 	$(CC) -Wall -O2 $(OBJ) -o binom $(LDFLAGS)
