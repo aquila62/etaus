@@ -41,6 +41,17 @@ typedef struct etausstruct {
    unsigned int *state;      /* state array of 1024 members */
    } etfmt;
 
+#define TAUSONE (et->s1 = (((et->s1&0xfffffffe)<<12) \
+      ^(((et->s1<<13)^et->s1)>>19)))
+
+#define TAUSTWO (et->s2 = (((et->s2&0xfffffff8)<< 4) \
+      ^(((et->s2<< 2)^et->s2)>>25)))
+
+#define TAUSTRI (et->s3 = (((et->s3&0xfffffff0)<<17) \
+      ^(((et->s3<< 3)^et->s3)>>11)))
+
+#define TAUS (TAUSONE ^ TAUSTWO ^ TAUSTRI)
+
 etfmt *etausinit(void);                 /* initialization routine */
 unsigned int etaus(etfmt *et);          /* random uint generator */
 int etausbit(etfmt *et);                /* random bit generator */
