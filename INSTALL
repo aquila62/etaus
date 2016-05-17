@@ -1,9 +1,5 @@
 Installing etaus:
 
-Be sure you have installed the GNU Scientific Library.
-
-sudo apt-get install libgsl0-dev
-
 Make shell scripts executable.
 
 chmod 755 *.sh
