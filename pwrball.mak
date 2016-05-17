@@ -28,7 +28,7 @@ CC=gcc
 
 CFLAGS=-c -Wall -O2
 
-LDFLAGS=-lncurses -lgsl -lgslcblas -lm
+LDFLAGS=-lncurses -lm
 
 pwrball:			$(OBJ)
 		$(CC) -Wall -O2 $(OBJ) -o pwrball $(LDFLAGS)
