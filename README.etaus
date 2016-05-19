@@ -39,7 +39,7 @@ Benchmarking.
 
 The benchmarking program counts the number of ticks taken to call
 the random number generator one hundred million times.  etaus
-performs about one third faster than the taus2 and Mersenne Twister
+performs about one sixth faster than the taus2 and Mersenne Twister
 generators in the GNU Scientific Library (GSL).
 
 When testing etaus as input to dieharder -g 200, be cautioned
@@ -63,8 +63,8 @@ of data.
 
 If you wish, you may override the initial values of the state array,
 so that you may conduct regression tests. You will also have to
-initialize the three taus states and the two previous outputs to
-arbitrary values.
+initialize the three taus states, the two previous outputs, and the
+current output to arbitrary values.
 
 All of the etaus states are available to the programmer through a
 public structure.  See etaus.h for the structure.
@@ -105,6 +105,28 @@ etausgen.c produces an ASCII stream of ones and zeros to stdout.
 
 etausraw.c feeds random binary data into down stream programs,
 such as dieharder or TestU01 test programs..
+
+Porting to Mingw.
+
+etaus is easy to port to Mingw on Windows 10.  The make files have
+to conform to Windows EXE format.  etausinit.c has to be changed
+slightly.  The date/time routine is different in Mingw, and the
+clock routine is not used.  Therefore the three states for the
+taus algorithm need three permutations of the same date and time.
+
+The Monte Carlo test programs have to change because they compare
+results with GNU Scientific Library random number generators. Under
+Mingw, the etaus integral is only compared with the mathematical
+solution.  Timings based on clock ticks are eliminated from the
+program.
+
+etaustim.c needs to be eliminated from the test suite.  Clock ticks
+are not reliable in Mingw.
+
+poischi.c needs a small change under Mingw.  The valid range for
+the chi square should come from a table, rather than from a GSL
+subroutine.  The chi square range varies, depending on the value
+of lambda.
 
 Read INSTALL for installing etaus.
 Read TESTING for running tests in this repository.
