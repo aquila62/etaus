@@ -29,7 +29,7 @@
 /* 32-bit integer using the taus algorithm plus a       */
 /* Bays-Durham shuffle.  The previous two cycles are    */
 /* xor'd together with the current cycle.               */
-/* The speed of etaus is 1/3 faster than the GSL        */
+/* The speed of etaus is 1/6 faster than the GSL        */
 /* subroutine gsl_rng_get(r).                           */
 /********************************************************/
 
