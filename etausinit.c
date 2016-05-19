@@ -29,7 +29,7 @@
 /* The period length of etaus is estimated to be           */
 /* 5.41e+2639.                                             */
 /* The period length of GSL taus2 is 3.09e+26.             */
-/* The speed of etaus is 1/3 faster than the GSL version   */
+/* The speed of etaus is 1/6 faster than the GSL version   */
 /* of taus2.                                               */
 
 #include <stdio.h>
