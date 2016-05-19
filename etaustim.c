@@ -51,7 +51,7 @@ int main(void)
 	 break;
 	 } /* if 100 million cycles */
       } /* for each cycle */
-   printf("etaus     count %.0f ticks %d\n",
+   printf("etaus                count %.0f ticks %d\n",
       count, elap);
    /**************************************************/
    /* time the GSL taus2 RNG                         */
@@ -84,7 +84,41 @@ int main(void)
 	 break;
 	 } /* if 100 million cycles */
       } /* for each cycle */
-   printf("GSL taus2 count %.0f ticks %d\n",
+   printf("GSL taus2            count %.0f ticks %d\n",
+      count, elap);
+   gsl_rng_free(r);
+   /**************************************************/
+   /* time the GSL Mersenne Twister RNG              */
+   /**************************************************/
+   /* initialize the GSL Mersenne Twister RNG        */
+   /* to date, time, #ticks                          */
+   /**************************************************/
+   r = (gsl_rng *) gsl_rng_alloc(gsl_rng_mt19937);
+   /* get clock ticks since boot                       */
+   clk = times(&t);
+   /* get date & time                                  */
+   time(&now);
+   /* combine date, time, and ticks into a single UINT */
+   dttk = (unsigned int) (now ^ clk);
+   /* initialize the GSL mt19937 random number generator */
+   /* to date,time,#ticks                              */
+   gsl_rng_set(r, dttk);
+   /**************************************************/
+   count = 0.0;
+   /* get ticks */
+   start = times(&t);
+   while (1)
+      {
+      gsl_rng_get(r);
+      count += 1.0;
+      if (count >= 100000000.0)
+         {
+         fin = times(&t);
+	 elap = (fin - start); 
+	 break;
+	 } /* if 100 million cycles */
+      } /* for each cycle */
+   printf("GSL Mersenne Twister count %.0f ticks %d\n",
       count, elap);
    gsl_rng_free(r);
    free(et->state);
