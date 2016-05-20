@@ -32,7 +32,7 @@ int main(void)
    double diff;                   /* expected - actual count */
    double diffsq;                 /* difference squared */
    double chisq = 0.0;            /* chi square total */
-   etfmt *et;                     /* Eegl structure */
+   etfmt *et;                     /* etaus structure */
    et = (etfmt *) etausinit();
    /**********************************/
    /* initialize tally array to zero */
