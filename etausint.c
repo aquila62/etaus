@@ -26,7 +26,6 @@
 /* See etauspwr.c for generating an unsigned integer    */
 /* of 1-32 bits.                                        */
 
-#include <math.h>
 #include "etaus.h"
 
 #define MAXINT 4294967296.0
@@ -39,6 +38,6 @@ int etausint(etfmt *et, int limit)
    num = (double) etaus(et) / MAXINT;   /* generate random number 0-1 */
    /* multiply num by the limit and truncate */ 
    /* this produces an integer from zero up to the limit */
-   intgr = (int) floor(num * (double) limit);
+   intgr = (int) (num * (double) limit);
    return(intgr);           /* return the signed integer */
    } /* etausint */
