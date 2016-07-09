@@ -42,6 +42,10 @@
 #include <gsl/gsl_rng.h>
 #include "etaus.h"
 
+#ifndef M_PI
+#define M_PI (3.14159265358979323846)
+#endif
+
 int main(void)
    {
    int i;                     /* loop counter                 */
@@ -126,6 +130,7 @@ int main(void)
    ratio = k * tot / bot;     /* calculate est. z-score        */
    mtfin = times(&t);         /* finish time for GSL mt19937   */
    printf("GSL mt19937 %18.15f\n", ratio);
+   gsl_rng_free(r);
    /************************************************************/
    /* allocate the ranlxd2 random number generator */
    r = (gsl_rng *) gsl_rng_alloc(gsl_rng_ranlxd2);
@@ -164,5 +169,8 @@ int main(void)
    printf("      etaus ticks %6d\n", etauselap);
    printf("GSL mt19937 ticks %6d\n", mtelap);
    printf("GSL ranlxd2 ticks %6d\n", ranlxelap);
+   gsl_rng_free(r);
+   free(et->state);
+   free(et);
    return(0);
    } /* main */

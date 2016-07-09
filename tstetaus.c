@@ -37,5 +37,7 @@ int main(void)
       printf("%d", j);     /* print random bit */
       } /* for each bit generated */
    printf("\n");      /* end of line at end of loop */
+   free(et->state);
+   free(et);
    return(0);         /* normal eoj */
    } /* main */

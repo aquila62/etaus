@@ -24,6 +24,10 @@
 #include <math.h>
 #include "etaus.h"
 
+#ifndef M_PI
+#define M_PI (3.14159265358979323846)
+#endif
+
 /* this tree structure is used to sort the */
 /* output of the Box-Muller transform      */
 typedef struct treestruct {

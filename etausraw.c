@@ -75,6 +75,9 @@ int main(void)
          p = (unsigned char *) blk;
          } /* output filled block */
       } /* for each random bit produced */
+   free(et->state);
+   free(et);
+   free(blk);
    /* the compiler requires a return statement */
    return(0);                 /* normal end of job */
    } /* main */

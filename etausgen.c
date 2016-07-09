@@ -76,5 +76,8 @@ int main()
          } /* output filled block */
       } /* for each random bit produced */
    /* the compiler requires a return statement */
+   free(blk);
+   free(et->state);
+   free(et);
    return(0);                 /* normal end of job */
    } /* main */
