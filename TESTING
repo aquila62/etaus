@@ -181,14 +181,14 @@ as input a test.
 
 ------------------------------------------------------
 
-Test etausint() by running tstpat.
+Test etausint() by running etauspat.
 This test requires the new curses package.
 
 sudo apt-get install libncurses-dev
 
-./tstnc
+./etauspat
 
-The output from tstnc is a random pattern of ASCII characters
+The output from etauspat is a random pattern of ASCII characters
 on a curses screen.  To quit press 'q'.
 
 ------------------------------------------------------
