@@ -35,7 +35,6 @@ along with this program; if not, write to:
 #include <unistd.h>
 #include <string.h>
 #include <malloc.h>
-#include <math.h>
 #include <time.h>
 #include <sys/times.h>
 #include <X11/Xlib.h>
@@ -364,6 +363,7 @@ int main()
       ifkey(xx);           /* if keyboard interrupt test for 'q' */
       } /* for each pixel in random walk */
    /* end of job: free memory */
+   XFreeGC(xx->dpy, xx->gc);           /* delete current gc */
    XDestroyWindow(xx->dpy, xx->w);     /* delete current window */
    XCloseDisplay(xx->dpy);             /* stop X Windows */
    free(xx->newwave);                  /* free random walk array */
