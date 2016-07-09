@@ -1,4 +1,4 @@
-etaus is a random number generator (RNG) that produces unsigned
+etaus is a random number generator (RNG) that produces 32-bit unsigned
 integers in a uniform distribution.  etaus is based on 1024 32-bit
 states.  etaus uses these 1024 states to perform a Bays-Durham shuffle.
 The 'e' in "etaus" means "extended taus", because the period length
@@ -6,9 +6,29 @@ of etaus is much longer than the original taus algorithm, created
 by Professor Pierre L'Ecuyer at the University of Montreal, Montreal,
 Quebec, Canada.
 
-The period length of etaus is so long that it can never be tested.
-Because of the Bays-Durham shuffle, the period length is theoretically
-5.42e+2639, or the factorial of 1024.
+Period length of etaus.
+
+The period length of etaus is based on the random number generator
+state.  In the case of etaus, the random number generator state is
+three generations of output, plus an array of 1024 states used by
+the Bays-Durham shuffle, plus the three states used by the TAUS
+algorithm.
+
+The period length is the number of generations it takes before
+every output of the random number generator is repeated in sequence
+for the same number of generations.
+
+Because of the Bays-Durham shuffle, the period length of etaus is
+theoretically 5.41e+2639, or the factorial of 1024.  The period
+length is so long that it can not be demonstrated on the strongest
+super-computer in existence today.
+
+One way to test the period length is to build a database, where the
+key is two successive overlapping generations of etaus output.  If
+there are no duplicate keys after hundreds of trillions of generations,
+then the period length is at least as long as the test.  If the test
+fails, then increase the size of the key to three successive overlapping
+generations of etaus output, and rerun the test.
 
 Test results.
 
