@@ -18,3 +18,4 @@ make -f etausnorm.mak
 make -f tstetaus.mak
 make -f ranwlk.mak
 make -f pwrball.mak
+make -f captcha.mak

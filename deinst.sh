@@ -18,3 +18,5 @@ make -f etausnorm.mak clean
 make -f tstetaus.mak clean
 make -f ranwlk.mak clean
 make -f pwrball.mak clean
+make -f captcha.mak clean
+rm -f pic.png

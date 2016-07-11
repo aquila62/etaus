@@ -215,6 +215,21 @@ line on an X Windows screen.  To quit press any key.
 
 ------------------------------------------------------
 
+Captcha generator with random background and partially
+random text colors.
+
+Requires the Netpbm package.
+
+sudo apt-get netpbm
+
+Usage:
+
+echo "text" | captcha | pnmtopng >mycaptcha.png
+
+Uses font.txt 12x24 font file.
+
+------------------------------------------------------
+
 Random Powerball Simulation:  pwrball
 pwrball is a random lottery game based on real odds
 and real pay-outs.  The jackpot is $1 Billion.
