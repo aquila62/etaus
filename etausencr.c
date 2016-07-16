@@ -22,15 +22,16 @@
 /************************************************************************/
 
 /**********************************************************/
-/* The CRC algorithm in this program was copied from      */
-/* http://www.hackersdelight.org/hdcodetxt/crc.c.txt      */
-/**********************************************************/
-
-/**********************************************************/
-/* This program initializes the random number generator   */
-/* state by overriding the state with a CRC hash based    */
-/* on an input password parameter                         */
-/* The algorithm used is a CRC feedback hash.             */
+/* This program initializes the etaus random number       */
+/* generator state by overriding its state with RANDU.    */
+/* RANDU is initialized by the CRC of the input password  */
+/* parameter.                                             */
+/* RANDU is a weak random number generator, but it is     */
+/* satisfactory enough for the encryption program to      */
+/* pass the dieharder random number test suite.           */
+/* Once initialized with RANDU, etaus is warmed up        */
+/* to minimize the weakness behind its initialization     */
+/* routine.                                               */
 /**********************************************************/
 
 #include <stdio.h>
@@ -41,6 +42,9 @@
 
 /* length of input/output buffer */
 #define BUFSZ (1024*1024)
+
+/* RANDU algorithm */
+#define RANDU (seed = seed * 65539)
 
 /* print the command syntax */
 void putstx(char *pgm)
@@ -90,8 +94,7 @@ void putblk(unsigned char *blk, int len)
       } /* write error */
    } /* putblk */
 
-/* generate the CRC table */
-/* See citation above for the CRC algorithm */
+/* Generate the CRC32C table */
 void bldtbl(unsigned int *table)
    {
    int j;
@@ -110,9 +113,7 @@ void bldtbl(unsigned int *table)
       } /* for each of 256 bytes in table */
    } /* bldtbl */
 
-/* calculate the 32-bit CRC of a block of data */
-/* This CRC calculation uses a CRC table */
-/* See citation above for the CRC algorithm */
+/* Calculate the 32-bit CRC of a message */
 unsigned int crc32c(unsigned char *message, unsigned int *table)
    {
    int i;
@@ -128,20 +129,13 @@ unsigned int crc32c(unsigned char *message, unsigned int *table)
 
 int main(int argc, char **argv)
    {
+   int i;                      /* loop counter */
    int pswlen;                 /* length of password parameter */
-   /* The CRC is followed by 4 bytes of zeros */
-   /* to turn the CRC into a 4 byte message */
-   /* terminated by zero */
-   /* The CRC is a 32-bit little endian integer */
-   /* No effort is made to eliminate zero bytes within */
-   /* the CRC itself */
-   unsigned int crc;           /* calculated CRC */
-   unsigned int zero;          /* 4 bytes of zeros following the CRC */
+   unsigned int seed;          /* RANDU seed */
    unsigned int tbl[256];      /* CRC table */
    unsigned int *statep;       /* pointer into et->state */
    unsigned int *stateq;       /* pointer for end of et->state */
    unsigned char psw[128];     /* password text */
-   unsigned char *crcp;        /* pointer for 4 byte CRC */
    unsigned char *buf;         /* input/output buffer */
    etfmt *et;                  /* etaus RNG structure */
    if (argc != 2) putstx(*argv);    /* must have password parameter */
@@ -167,34 +161,41 @@ int main(int argc, char **argv)
       exit(1);
       } /* out of memory */
    /*****************************************************/
+   /* initialize random number generator etaus          */
+   /* initialize the CRC table                          */
+   /* calculate the CRC of the password parameter       */
+   /* initialize the RANDU seed to this CRC             */
+   /*****************************************************/
    et = (etfmt *) etausinit();    /* initialize etaus RNG */
    bldtbl(tbl);      /* initialize CRC table */
-   crc = zero = 0;         /* treat the CRC as a 4 byte string */
-   crcp = (unsigned char *) &crc;   /* point to CRC string */
+   seed = crc32c(psw,tbl);
+   /*****************************************************/
+   /* warm up the RANDU random number generator         */
+   /*****************************************************/
+   i = 256;
+   while (i--) RANDU;
    /*****************************************************/
    /* override the state of the random number generator */
-   /* with the password parameter hashed by the CRC     */
-   /* feedback algorithm.                               */
+   /* with the password parameter converted into        */
+   /* 32-bit unsigned integers.                         */
    /*****************************************************/
-   crc = crc32c(psw,tbl);
-   et->s1 = crc;
-   crc = crc32c(crcp,tbl);
-   et->s2 = crc;
-   crc = crc32c(crcp,tbl);
-   et->s3 = crc;
-   crc = crc32c(crcp,tbl);
-   et->out = crc;
-   crc = crc32c(crcp,tbl);
-   et->prev = crc;
-   crc = crc32c(crcp,tbl);
-   et->pprev = crc;
+   et->s1    = RANDU;
+   et->s2    = RANDU;
+   et->s3    = RANDU;
+   et->out   = RANDU;
+   et->prev  = RANDU;
+   et->pprev = RANDU;
    statep = (unsigned int *) et->state;
    stateq = (unsigned int *) et->state + 1024;
    while (statep < stateq)
       {
-      crc = crc32c(crcp,tbl);
-      *statep++ = crc;
+      *statep++ = RANDU;
       } /* for each state in et->state array */
+   /*****************************************************/
+   /* warm up the etaus random number generator         */
+   /*****************************************************/
+   i = 2048;
+   while (i--) etaus(et);
    /*****************************************************/
    /* encrypt the stdin data stream                     */
    /* write encrypted data to stdout                    */
