@@ -19,4 +19,8 @@ make -f tstetaus.mak clean
 make -f ranwlk.mak clean
 make -f pwrball.mak clean
 make -f captcha.mak clean
+make -f etausencr.mak clean
+make -f genalfa.mak clean
+make -f gendna.mak clean
+make -f pair.mak clean
 rm -f pic.png

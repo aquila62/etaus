@@ -19,3 +19,7 @@ make -f tstetaus.mak
 make -f ranwlk.mak
 make -f pwrball.mak
 make -f captcha.mak
+make -f etausencr.mak
+make -f genalfa.mak
+make -f gendna.mak
+make -f pair.mak
