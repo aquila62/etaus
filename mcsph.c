@@ -98,7 +98,7 @@ int main(void)
    dttk = (unsigned int) (now ^ clk);
    /* initialize the GSL ranlxd2 random number generator      */
    /* to date,time,#ticks                                     */
-   gsl_rng_set(r, dttk);      /* initialize ranlxd2 seed      */
+   gsl_rng_set(r, dttk);      /* initialize mt19937 seed      */
    tot = 0.0;                 /* initialize total points in a sphere */
    i = (int) bot;             /* set loop counter */
    /* get clock ticks since boot                              */

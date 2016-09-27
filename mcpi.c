@@ -85,6 +85,7 @@ int main(void)
    printf("      etaus Pi/4 %18.15f\n", ratio);
    /************************************************************/
    /* allocate the mt19937 random number generator */
+   /************************************************************/
    r = (gsl_rng *) gsl_rng_alloc(gsl_rng_mt19937);
    /* get clock ticks since boot                           */
    clk = times(&t);
@@ -94,7 +95,7 @@ int main(void)
    dttk = (unsigned int) (now ^ clk);
    /* initialize the GSL ranlxd2 random number generator      */
    /* to date,time,#ticks                                     */
-   gsl_rng_set(r, dttk);      /* initialize ranlxd2 seed      */
+   gsl_rng_set(r, dttk);      /* initialize mt19937 seed      */
    tot = 0.0;                 /* initialize total points in a circle */
    i = (int) bot;             /* set loop counter */
    /* get clock ticks since boot                              */
@@ -116,6 +117,7 @@ int main(void)
    gsl_rng_free(r);
    /************************************************************/
    /* allocate the ranlxd2 random number generator */
+   /************************************************************/
    r = (gsl_rng *) gsl_rng_alloc(gsl_rng_ranlxd2);
    /* get clock ticks since boot                           */
    clk = times(&t);
