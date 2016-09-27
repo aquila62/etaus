@@ -24,3 +24,4 @@ make -f genalfa.mak clean
 make -f gendna.mak clean
 make -f pair.mak clean
 rm -f pic.png
+rm -f rwxf
